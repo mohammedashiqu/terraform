@@ -1,0 +1,15 @@
+module "module1" {
+  source = "./modules/vpc_modules"
+  providers = {
+    aws=aws.us1
+  }
+  tags1 = "productionVPC"
+}
+module "module2" {
+  source = "./modules/vpc_modules"
+  vpc1 = "19.0.0.0/24"
+  tags1 = "testVPC"
+  providers = {
+    aws=aws.us2
+  }
+}

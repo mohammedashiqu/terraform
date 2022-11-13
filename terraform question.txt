@@ -1,0 +1,50 @@
+what is terraform ?
+-------------------
+it is a iac platfrom where we can deploy infrastructure
+
+type of iac
+-----------
+terraform
+cloudformation
+azure blue print
+heat
+salt stack
+chef
+puppet
+
+what is differents between iac and configuration tool with example?
+-------------------------------------------------------------------
+iac used to create infra, confgiuration management used to create configuraion on server
+
+steps to deploy terrafom -> init, validate, plan, apply
+
+type of block
+-------------
+provider block
+resorce
+module
+variable
+
+modules
+--------
+that allow us to resue the code multiple time
+
+multipe configuration file how to create?
+-----------------------------------------
+
+terrafom variable an dterraform.tfvars
+--------------------------------------
+
+userdata?
+---------
+
+output variable
+input variable
+
+what is fmt?
+what is -auto-approve?
+how to create shell script in terraform
+type of certifications
+
+how to launch multiple environment
+multiple region deployment

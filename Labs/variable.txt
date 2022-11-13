@@ -1,0 +1,13 @@
+create 2 file 1 main.tf and terraform.tf
+
+
+from main file
+--------------
+variable "instance_type" {
+  type = string
+}
+
+
+from terraform.tf file
+----------------------
+instance_type = "t2.micro"

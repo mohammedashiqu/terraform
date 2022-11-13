@@ -1,0 +1,10 @@
+provider "aws" {
+  alias = "us1"
+  region = "us-west-1"
+  version = "~>3.0"
+}
+provider "aws" {
+  alias = "us2"
+  region = "us-west-2"
+  version = "~>3.0"
+}

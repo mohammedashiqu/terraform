@@ -1,0 +1,6 @@
+variable "vpc1" {
+  default = "13.0.0.0/16"
+}
+variable "tags1" {
+  default = "customTag"
+}

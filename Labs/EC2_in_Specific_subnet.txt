@@ -1,0 +1,16 @@
+provider "aws" {
+  version = "~> 3.0"
+  region  = "us-east-1"
+}
+
+# create ec2
+resource "aws_instance" "instance1" {
+  subnet_id = "subnet-031d2365c7ccf3f7c"
+  ami           = "ami-0cff7528ff583bf9a"
+  instance_type = "t2.micro"
+  count = 1
+  tags = {
+    Name = "test"
+    Environment = "Ecom"
+  }
+}

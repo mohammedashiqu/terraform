@@ -1,0 +1,2 @@
+- terraform destroy -target resource_type.name
+- terraform target resource_type.name -target resource_type.name -target resource_type.name

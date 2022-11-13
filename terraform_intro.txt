@@ -1,0 +1,67 @@
+what is terraform
+------------------
+terffaorm is tool which we can used to build, change and versioning of infrastructure
+commonly it is called infrastructure as a code (iac)
+by using terraform we can manage low level component and high level component such as vm, vpcs,storage and dns entry
+saas management.
+
+tools for iac
+----------------
+terraform
+cloud formation
+ARM templates
+
+chef
+heat
+puppet
+ansible
+saltstack
+
+two types of tool
+1)orchestration tool or infrastructure tool
+  - terraform
+  - cloudformation
+  - saltstack
+2)configuaration management tool
+  - puppet
+  - ansible
+  - chef
+  - saltstack
+by collaborting these two tools we can create fully fledged infrastructure
+
+blocks
+------
+resource "aws_vpc" "main" {
+  cidr_block = var.base_cidr_block
+}
+
+<BLOCK TYPE> "<BLOCK service LABEL>" "<BLOCK unique LABEL>" {
+  # Block body
+  <IDENTIFIER> = <EXPRESSION> # Argument
+}
+
+
+
+including resources
+-------------------
+
+input variable
+--------------
+
+output variable
+---------------
+
+data sources
+------------
+
+
+comments
+---------
+# - single line command
+// - single line command
+/* - multi line commnands
+
+
+
+
+

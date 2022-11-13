@@ -1,0 +1,6 @@
+#!/bin/bash
+sudo yum update -y
+sudo yum install httpd -y
+sudo systemctl start httpd
+sudo aws s3 cp s3://ashiq.com/index.html /var/www/html/
+sudo echo "* * * * * sudo aws s3 cp s3://ashiq.com/index.html /var/www/html/" >> /var/spool/cron/ec2-user

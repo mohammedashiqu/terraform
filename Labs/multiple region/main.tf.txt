@@ -1,0 +1,12 @@
+module "vpc" {
+  source = "./vpcmodule"
+  providers = {
+    aws = aws.us
+  }
+}
+module "mod2" {
+  source = "./vpcmodule"
+  providers = {
+    aws = aws.eu
+  }
+}

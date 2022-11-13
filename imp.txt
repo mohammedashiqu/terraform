@@ -1,0 +1,21 @@
+how to remove existing infra by usign terraform
+create infra multi region or production pre production
+
+
+change instance type t2.micro to t2.nano
+availability zone mentioned specific area for insatnce
+variable
+
+terraform git hub or s3
+
+terraform.lock.hcl
+terraform main file
+terraform.state.file
+terraform.state.file
+variable file
+
+workflows
+---------
+init > fmt > validate > plan > apply > destroy
+
+

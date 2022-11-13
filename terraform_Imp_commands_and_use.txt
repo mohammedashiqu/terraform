@@ -1,0 +1,14 @@
+terraform init - to initialize
+terraform apply - to apply plan 
+terraform destroy - to destroy infrastructure
+
+terraform plan - to plan actions
+terraform fmt - to rectify script issue/indendation issues
+terraform validate - to find issues in script
+
+terraform destroy -target resourcename.localname - used to remove a specific resource
+terraform apply -auto-approve - withput any yes prompt it will create
+terraform destroy -auto-approve - without any further input i will execute
+terraform -init-upgrade - upgrade initialization
+
+depends_on=[resource.name] - used to create all dependancy before it create

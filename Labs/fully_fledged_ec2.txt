@@ -1,0 +1,88 @@
+provider "aws" {
+  version = "~>3.0"
+  region = "ap-south-1"
+}
+
+resource "aws_vpc" "vpc100" {
+  cidr_block = "11.0.0.0/24"
+  tags = {
+    Name = "TerraVpc"
+  }
+}
+resource "aws_subnet" "sub1" {
+  vpc_id = aws_vpc.vpc1.id
+  cidr_block = "11.0.0.0/25"
+  availability_zone = "ap-south-1a"
+  map_public_ip_on_launch = true
+  depends_on = [aws_vpc.vpc1]
+  tags = {
+    Name = "terra Sub"
+  }
+}
+resource "aws_eip" "elasticip" {
+  instance = aws_instance.ec21.id
+  depends_on = [aws_instance.ec21]
+  vpc = true
+}
+resource "aws_instance" "ec21" {
+  ami = "ami-08df646e18b182346"
+  instance_type = "t2.micro"
+  subnet_id = aws_subnet.sub1.id
+  security_groups = [aws_security_group.sg1.id]
+  user_data = <<-EOF
+              #!/bin/bash
+              sudo yum update -y
+              sudo yum install -y httpd
+              sudo systemctl start httpd
+              echo "Hello from the EC2 instance." > /var/www/html/index.html
+              EOF
+  tags = {
+    Name = "terraServer"
+  }
+
+}
+resource "aws_route_table" "r1" {
+  vpc_id = aws_vpc.vpc1.id
+  depends_on = [aws_vpc.vpc1]
+  tags = {
+    Name = "terraRoute"
+  }
+}
+resource "aws_route_table_association" "r1" {
+  subnet_id = aws_subnet.sub1.id
+  route_table_id = aws_route_table.r1.id
+  depends_on = [aws_subnet.sub1]
+}
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.vpc1.id
+  depends_on = [aws_vpc.vpc1]
+  tags = {
+    Name = "myGateway"
+  }
+}
+resource "aws_route" "r2" {
+  route_table_id = aws_route_table.r1.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id = aws_internet_gateway.igw.id
+  depends_on = [aws_vpc.vpc1]
+}
+
+resource "aws_security_group" "sg1" {
+  name = "terraSG"
+  description = "terraSG"
+  vpc_id = aws_vpc.vpc100.id
+  depends_on = [aws_vpc.vpc1]
+
+  ingress {
+    from_port = 0
+    protocol  = "-1"
+    to_port   = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port = 0
+    protocol  = "-1"
+    to_port   = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}

@@ -1,0 +1,43 @@
+provider "aws" {
+  version = "~> 3.0"
+  region  = "us-east-1"
+}
+
+# Create a VPC
+resource "aws_vpc" "example" {
+  cidr_block = "10.0.0.0/16"
+  tags = {
+    Name = "VPC_Terraform"
+  }
+}
+
+# Create a Subnet
+resource "aws_subnet" "main1" {
+  vpc_id     = aws_vpc.example.id
+  cidr_block = "10.0.1.0/24"
+
+  tags = {
+    Name = "Terraform_Subnet1"
+  }
+
+}
+
+# Create a Subnet
+resource "aws_subnet" "main2" {
+  vpc_id     = aws_vpc.example.id
+  cidr_block = "10.0.2.0/24"
+
+  tags = {
+    Name = "Terraform_Subnet2"
+  }
+}
+
+# Create a Subnet
+resource "aws_subnet" "main3" {
+  vpc_id     = aws_vpc.example.id
+  cidr_block = "10.0.3.0/24"
+
+  tags = {
+    Name = "Terraform_Subnet3"
+  }
+}

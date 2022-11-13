@@ -1,0 +1,30 @@
+provider "aws" {
+  version = "~>3.0"
+  region  = "ap-northeast-3"
+}
+resource "aws_vpc" "vpc" {
+  cidr_block = "10.0.0.0/24"
+}
+resource "aws_subnet" "subnet" {
+  vpc_id = aws_vpc.vpc.id
+  availability_zone = "ap-northeast-3a"
+  cidr_block = "10.0.0.0/25"
+}
+variable "instance_type" {
+  type = string
+}
+resource "aws_instance" "ec2" {
+  ami = "ami-0c66c8e259df7ec04"
+  instance_type = var.instance_type
+  subnet_id = aws_subnet.subnet.id
+  tags = {
+    Name = "terraServer"
+  }
+}
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.vpc.id
+}
+resource "aws_eip" "publicip" {
+  instance = aws_instance.ec2.id
+  vpc = true
+}

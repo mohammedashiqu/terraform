@@ -1,0 +1,120 @@
+provider "aws" {
+  version = "~>3.0"
+  region  = "us-east-2"
+}
+resource "aws_vpc" "vpc_ecom_1" {
+  cidr_block = "192.167.0.0/17"
+  tags = {
+    Name = "terraformVpc"
+  }
+}
+
+resource "aws_subnet" "sub1" {
+  vpc_id = aws_vpc.vpc_ecom_1.id
+  availability_zone = "us-east-2a"
+  cidr_block = "192.167.0.0/24"
+  tags = {
+    Name = "terraSubnet"
+  }
+}
+resource "aws_instance" "ec-1" {
+  ami = "ami-02d1e544b84bf7502"
+  instance_type = "t2.nano"
+  subnet_id = aws_subnet.sub1.id
+  user_data = file("shell.sh")
+  iam_instance_profile = aws_iam_instance_profile.test_profile.name
+  security_groups = [aws_security_group.sg1.id]
+  tags = {
+    Name = "terraform_ec2"
+  }
+}
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.vpc_ecom_1.id
+}
+resource "aws_eip" "elastic_ip" {
+  instance = aws_instance.ec-1.id
+  tags = {
+    Name = "Name"
+  }
+}
+resource "aws_route_table" "rt1" {
+  vpc_id = aws_vpc.vpc_ecom_1.id
+}
+resource "aws_route_table_association" "ass1" {
+  route_table_id = aws_route_table.rt1.id
+  subnet_id = aws_subnet.sub1.id
+}
+resource "aws_route" "route1" {
+  route_table_id = aws_route_table.rt1.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id = aws_internet_gateway.igw.id
+}
+resource "aws_security_group" "sg1" {
+  name = "mysg"
+  description = "mysg"
+  vpc_id = aws_vpc.vpc_ecom_1.id
+  ingress {
+    from_port = 22
+    protocol  = "tcp"
+    to_port   = 22
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port = 80
+    protocol  = "tcp"
+    to_port   = 80
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port = 0
+    protocol  = "-1"
+    to_port   = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+resource "aws_iam_role" "test_role" {
+  name = "test_role"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+
+  tags = {
+      tag-key = "tag-value"
+  }
+}
+resource "aws_iam_instance_profile" "test_profile" {
+  name = "test_profile"
+  role = aws_iam_role.test_role.name
+}
+resource "aws_iam_role_policy" "test_policy" {
+  name = "test_policy"
+  role = aws_iam_role.test_role.id
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "s3:*"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}

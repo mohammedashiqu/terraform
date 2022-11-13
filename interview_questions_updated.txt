@@ -1,0 +1,57 @@
+terraform install
+-----------------
+sudo yum install -y yum-utils
+sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
+sudo yum -y install terraform
+
+
+terraform plan -lock=false (to remove lock temporarly)
+what is drift
+terraform licycle commands
+what is iac
+what is terraform registry
+terraform state file
+terraform backup.state file
+terraform backend file
+terraform remote backend file
+terraform state lokc file
+terafform state file language - json
+what is terraform -migrate-state
+terraform apply --auto-approve
+tfvars vs variable
+what is module?
+key vault?
+output vs input variable?
+what is taint and use cases?
+can u merge 2 state file?
+terraform -reconfigure
+
+challenges in terraform
+-----------------------
+
+what is your daily basis work on terraform
+------------------------------------------
+we not gonna touch daily according to the requirement of resorce in infra or they want to implemet
+new resource or environemnt, then we gonna plan and implemnt that.
+
+how many services you arev used in terrafom
+--------------------------------------------
+more than 20 services, but i am not recalling the exact count, if the requirement is there
+according to that im doing for that.
+
+what is provisioners 
+--------------------
+Provisioners are used to execute scripts on a local or remote machine as part of resource
+creation or destruction. Provisioners can be used to bootstrap a 
+resource, cleanup before destroy, run configuration management, etc.
+
+terraform core and plugins
+--------------------------
+
+how creating infra with jenkins or any other cicd
+-------------------------------------------------
+jenkins, cicd
+
+when acceesing two peple state file what will happen
+----------------------------------------------------
+that will not going to happen, 1 person can use at a time

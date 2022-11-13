@@ -1,0 +1,12 @@
+variable "tag" {
+  default = "Custom_Name"
+}
+variable "vpccidr" {
+  default = "10.0.0.0/24"
+}
+variable "subtagpub" {
+  default = "public"
+}
+variable "subtagpvt" {
+  default = "private"
+}
